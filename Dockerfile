@@ -2,12 +2,12 @@
 # This is maintained and intended to be run in AWS Docker instances with ECS support.
 # Based on the work by https://github.com/ConSol/docker-headless-vnc-container
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Craig Williams "craig@ip80.com"
 ENV REFRESHED_AT 2015-12-02
 
-ENV JAVA_VERSION 8u65
+ENV JAVA_VERSION 8u101
 ENV JAVA_HOME /usr/lib/jvm/java-$JAVA_VERSION
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -21,7 +21,7 @@ ENV SAKULI_DOWNLOAD_URL https://labs.consol.de/sakuli/install
 
 RUN set -x \
  && : \
- && : add linux-mint dependicies and update packages \
+ && : add linux-mint dependencies and update packages \
  && apt-key adv --recv-key --keyserver keyserver.ubuntu.com "3EE67F3D0FF405B2" \
  && echo "deb http://packages.linuxmint.com/ rafaela main upstream import" >> /etc/apt/sources.list.d/mint.list \
  && echo "deb http://extra.linuxmint.com/ rafaela main " >> /etc/apt/sources.list.d/mint.list \
@@ -70,17 +70,15 @@ RUN set -x \
  && apt-get clean \
  && : \
  && : Install Android SDK \
- && wget -qO- http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz | tar xz -C /root/ --no-same-permissions \
+ && wget -qO- http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | tar xz -C /root/ --no-same-permissions \
  && chmod -R a+rX /root/android-sdk-linux \
  && : \
  && : Install Android tools \
  && echo y | /root/android-sdk-linux/tools/android update sdk --filter tools --no-ui --force -a \
  && echo y | /root/android-sdk-linux/tools/android update sdk --filter platform-tools --no-ui --force -a \
  && echo y | /root/android-sdk-linux/tools/android update sdk --filter platform --no-ui --force -a \
- && echo y | /root/android-sdk-linux/tools/android update sdk --filter build-tools-21.0.1 --no-ui -a \
- && echo y | /root/android-sdk-linux/tools/android update sdk --filter sys-img-x86-android-18 --no-ui -a \
- && echo y | /root/android-sdk-linux/tools/android update sdk --filter sys-img-x86-android-19 --no-ui -a \
- && echo y | /root/android-sdk-linux/tools/android update sdk --filter sys-img-x86-android-21 --no-ui -a
+ && echo y | /root/android-sdk-linux/tools/android update sdk --filter build-tools-24.0.1 --no-ui -a \
+ && echo y | /root/android-sdk-linux/tools/android update sdk --filter sys-img-x86-android-24 --no-ui -a
 
 ENV ANDROID_HOME /root/android-sdk-linux
 
